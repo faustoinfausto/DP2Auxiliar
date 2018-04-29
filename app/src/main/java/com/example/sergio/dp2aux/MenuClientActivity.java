@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
@@ -25,6 +26,8 @@ public class MenuClientActivity extends Activity {
 
     private String user_name;
     private String user_id;
+    private boolean flag_idle=true;
+    private Timer timer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,10 @@ public class MenuClientActivity extends Activity {
         user_name = intent.getStringExtra(RecognizeActivity.USER_NAME);
         user_id = intent.getStringExtra(RecognizeActivity.USER_ID);
         _set_components();
+        _set_not_idle();
+        LogOutTimerTask logoutTimeTask = new LogOutTimerTask();
+        timer = new Timer();
+        timer.schedule(logoutTimeTask, 60000);
 
 
     }
@@ -50,10 +57,6 @@ public class MenuClientActivity extends Activity {
         rv.setAdapter(adapter);
 
     }
-
-
-
-
 
     class Object_opcion {
         String name;
@@ -81,27 +84,14 @@ public class MenuClientActivity extends Activity {
     }
 
 
-    private Timer timer;
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        timer = new Timer();
-        Log.i("Main", "Invoking logout timer");
-        LogOutTimerTask logoutTimeTask = new LogOutTimerTask();
-        timer.schedule(logoutTimeTask, 60000); //auto logout in 1 minute
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (timer != null) {
-            timer.cancel();
-            Log.i("Main", "cancel timer");
-            timer = null;
-        }
+    private void _set_not_idle(){
+         LinearLayout linearLayout= findViewById(R.id.linear_layout);
+         linearLayout.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 flag_idle=false;
+             }
+         });
     }
 
     private class LogOutTimerTask extends TimerTask {
@@ -110,10 +100,15 @@ public class MenuClientActivity extends Activity {
         public void run() {
 
             //redirect user to login screen
-            Intent i = new Intent(MenuClientActivity.this, IddleActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
+            if(flag_idle==true){
+                Intent i = new Intent(MenuClientActivity.this, IddleActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+
+            }
+            flag_idle=false;
             finish();
         }
     }
+
 }
