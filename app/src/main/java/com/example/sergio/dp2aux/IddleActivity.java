@@ -1,10 +1,15 @@
 package com.example.sergio.dp2aux;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.VideoView;
 
 public class IddleActivity extends Activity {
@@ -22,6 +27,8 @@ public class IddleActivity extends Activity {
         smartTV_user_name = intent.getStringExtra(LoginActivity.USER_NAME);
 
         _inicializar_componentes();
+
+
     }
 
     private void _inicializar_componentes() {
@@ -32,6 +39,16 @@ public class IddleActivity extends Activity {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
+            }
+        });
+        video_iddle.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                //Log.i("TAG", "Video 1 clicked, starting playback");
+                //System.out.print("CLICK");
+                _entrar_actividad_reconocimiento();
+                return false;
             }
         });
         //Iniciamos el video
@@ -48,4 +65,12 @@ public class IddleActivity extends Activity {
         Uri uri = Uri.parse(uriPath);
         video_iddle.setVideoURI(uri);
     }
+
+    private void _entrar_actividad_reconocimiento(){
+        Intent intent = new Intent(this, RecognizeActivity.class);
+        startActivity(intent);
+    }
+
+
+
 }
