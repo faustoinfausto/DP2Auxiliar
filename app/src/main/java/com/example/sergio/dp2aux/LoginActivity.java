@@ -1,8 +1,6 @@
 package com.example.sergio.dp2aux;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,21 +28,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         if( _usuario_valido(eText_user.getText().toString(), eText_pass.getText().toString()) )
             _entrar_actividad_servicio();
         else{
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            alertDialogBuilder.setMessage("El usuario o constraseña no son validos")
-                    .setTitle("Usuario Incorrecto");
-            //alertDialogBuilder.setNegativeButton("Ok", null);
-            alertDialogBuilder.setNegativeButton(
-                    "Ok",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }
-            );
-            AlertDialog alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
+
+            Alert.generar_alerta(this, "El usuario o contrase;a no son validos", "Usuario Incorrecto");
         }
     }
 

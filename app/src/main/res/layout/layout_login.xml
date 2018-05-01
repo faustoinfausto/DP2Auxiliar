@@ -22,7 +22,7 @@
         android:layout_marginTop="120dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:text="tv1" />
 
     <TextView
         android:id="@+id/label_pass"
@@ -41,7 +41,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="220dp"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:text="p1"/>
 
     <Button
         android:id="@+id/btn_login"
