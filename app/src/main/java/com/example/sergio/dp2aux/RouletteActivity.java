@@ -25,49 +25,12 @@ public class RouletteActivity extends Activity{
 
         ruleta_girando = true;
         _girar_ruleta();
-        //_brillo_aka_humo();
     }
 
     private void _girar_ruleta(){
-        if(num_vuelta_ruleta >= 5000) {
-            num_vuelta_ruleta = 0;
-            return;
-        }
 
-        /*
-        if(num_ruleta == 500) {
-            num_ruleta = 0;
-            return;
-        }
-
-        if( num_ruleta < 250 ) {
-            for (int i = 0; i < num_ruleta; i++) {
-                ruleta_amarillo.setRotation(ruleta_amarillo.getRotation() + 1);
-                ruleta_azul.setRotation(ruleta_azul.getRotation() + 1);
-                ruleta_rojo.setRotation(ruleta_rojo.getRotation() + 1);
-                ruleta_verde.setRotation(ruleta_verde.getRotation() + 1);
-            }
-        }
-        else {
-            for (int i = num_ruleta; i > 0; i--) {
-                ruleta_amarillo.setRotation(ruleta_amarillo.getRotation() + 1);
-                ruleta_azul.setRotation(ruleta_azul.getRotation() + 1);
-                ruleta_rojo.setRotation(ruleta_rojo.getRotation() + 1);
-                ruleta_verde.setRotation(ruleta_verde.getRotation() + 1);
-            }
-        }
-        */
-
-        if( num_vuelta_ruleta < 250 ) {
-            for (int i = 0; i < num_vuelta_ruleta; i++)
-                ruleta_humo.setRotation(ruleta_humo.getRotation() + 1);
-        }
-        else
-            for (int i = num_vuelta_ruleta; i > 0; i--)
-                ruleta_humo.setRotation(ruleta_humo.getRotation() + 1);
-
-        //for(int i = 0; i < num_vuelta_ruleta; i++)
-        //    ruleta_humo.setRotation(ruleta_humo.getRotation() + 1);
+        for(int i = 0; i < (num_vuelta_ruleta/2); i++)
+            ruleta_humo.setRotation(ruleta_humo.getRotation() + 1);
 
         num_vuelta_ruleta++;
 
@@ -78,22 +41,17 @@ public class RouletteActivity extends Activity{
                     _brillo_aka_humo();
                 }
             }, 5*1000);
-            /*
             mHandler.postDelayed(new Runnable() {
                 public void run() {
                     _entrar_actividad_prize();
                 }
-            }, 9*1000);
-            */
-            _girar_ruleta();
+            }, 5*1000 + 600);
         }
-        else{
-            mHandler.postDelayed(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
                 public void run() {
                     _girar_ruleta();
                 }
             }, 10);
-        }
     }
 
     private void _entrar_actividad_prize(){
@@ -104,32 +62,18 @@ public class RouletteActivity extends Activity{
     }
 
     private void _brillo_aka_humo(){
-
-        //if(blanco_humo.getBackground().getAlpha() == 255 || ruleta_girando) {
-        //if(blanco_humo.getBackground().getAlpha() > 250 ) {
-            //contador_flash++;
-            //num_alpha_luz = 0;
-            //if(contador_flash > 3)
-                //_entrar_actividad_prize();
-            //return;
-        //}
-
-        for(int i = 0; i < num_alpha_luz; i++) {
-            if (blanco_humo.getBackground().getAlpha() <= 250)
+        for(int i = 0; i < (num_alpha_luz/4); i++) {
+            if (blanco_humo.getBackground().getAlpha() < 255)
                 blanco_humo.getBackground().setAlpha(blanco_humo.getBackground().getAlpha() + 1);
             else
-                _entrar_actividad_prize();;
+                _entrar_actividad_prize();
         }
-
-
         num_alpha_luz++;
-
         mHandler.postDelayed(new Runnable() {
             public void run() {
                 _brillo_aka_humo();
             }
         }, 5);
-        //blanco_humo.setImageAlpha(255);
     }
 
     private void _inicializar_componentes(){
