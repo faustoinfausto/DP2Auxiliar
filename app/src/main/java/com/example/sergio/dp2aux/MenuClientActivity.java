@@ -34,7 +34,8 @@ public class MenuClientActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_menu_client_recycleviewer);
         Intent intent = getIntent();
-        user_name = intent.getStringExtra(RecognizeActivity.USER_NAME);
+        //user_name = intent.getStringExtra(RecognizeActivity.USER_NAME);
+        user_name="Blanca Rezza";
         user_id = intent.getStringExtra(RecognizeActivity.USER_ID);
         _set_components();
         _set_not_idle();
@@ -43,10 +44,12 @@ public class MenuClientActivity extends Activity {
         timer.schedule(logoutTimeTask, 60000);
 
 
+
     }
     private void _set_components(){
         TextView textView= findViewById(R.id.nombre_cliente);
         textView.setText("Hola " + user_name + "!");
+        textView.setTextSize(40);
         //cards se inicializan
         initializeData();
         RecyclerView rv = (RecyclerView)findViewById(R.id.recycle_view);
@@ -109,6 +112,7 @@ public class MenuClientActivity extends Activity {
             flag_idle=false;
             finish();
         }
+
     }
 
 }
